@@ -5,6 +5,20 @@ from Bio.Seq import translate #not Translate!!!!!!
 #import the IUPAC alphbet definitions 
 from Bio.Alphabet import generic_dna, generic_protein, IUPAC 
 from Bio.Data import CodonTable 
+import sys 
+import optparse
+import random
+
+# parser = optparse.OptionParser() 
+# (options,args) = parser.parse_args()
+
+# #setup input/output files, hardcoded
+# #output = open('GAACCT_distro.txt','w')
+# #input = open('GAACCT_output.txt')
+
+# #setup input/output files, as args
+# #output = open(args[1],'w')
+# input = open(args[0])
 
 #create a Sequence object and assign it to TolC 
 #positive reverse translation control and input for translation
@@ -109,21 +123,23 @@ class CodonTable(object):
                 if lineParts[z+1] not in self.amino_acid_to_all_map:
                     self.amino_acid_to_all_map[lineParts[z+1]] = {}
                 self.amino_acid_to_all_map[lineParts[z+1]][lineParts[z]] = float(lineParts[z+2])
-                z = z + 5
+                z = z + 5   
+        #print self.amino_acid_to_all_map
 
-        for aminoAcid in self.amino_acid_to_all_map: #nested for loop for dict in dict
+        self.amino_acid_to_all_cumulativefreq = self.amino_acid_to_all_map
+        for aminoAcid in self.amino_acid_to_all_cumulativefreq: #nested for loop for dict in dict
             cumulativeFreq = 0
-            for codon in self.amino_acid_to_all_map[aminoAcid]:
-                cumulativeFreq += self.amino_acid_to_all_map[aminoAcid][codon]
-                self.amino_acid_to_all_map[aminoAcid][codon] = cumulativeFreq
-        print self.amino_acid_to_all_map
-#create another map of freq to comlpement cumltvfreq
+            for codon in self.amino_acid_to_all_cumulativefreq[aminoAcid]:
+                cumulativeFreq += self.amino_acid_to_all_cumulativefreq[aminoAcid][codon]
+                self.amino_acid_to_all_cumulativefreq[aminoAcid][codon] = cumulativeFreq
+        #print self.amino_acid_to_all_cumulativefreq
+
     def translate_codon(self, codon):
         AA = self.codon_to_amino_acid_map[codon]
         return AA
 
     def translate_sequence(self, seq):
-        #easy transcriber!  don't need this biopython funciton now..
+        #easy transcriber!  don't need this biopython funciton now...  just call translate_sequence(seq)
         seqtrns = seq.replace('T','U')
         #print seqtrns
 
@@ -137,40 +153,49 @@ class CodonTable(object):
             b = self.codon_to_amino_acid_map[codon]
             trans = trans + b
         return trans #returns cause to break out of function currently in, regardles of loops
-        #this code is now useless, but was my first implementation of the translate algortihm using tolC as sepcific case example
-        # tolCstr = str(mRtolC)
-        # trans = ""
-        # #print trans
-        # z = 0
-        # while z + 2 < len(tolCstr):
-        #     #print tolCstr[0]
-        #     codon = tolCstr[z] + tolCstr[z+1] + tolCstr[z+2]
-        #     #print codon
-        #     z = z + 3
-        #     if codon in self.codon_to_amino_acid_map:
-        #         #print 'In Here!'
-        #         b = self.codon_to_amino_acid_map[codon]
-        #         trans = trans + b
-        # print trans
-        # if str(trans) == str(TolC):
-        #     print 'congrats, you reinvented the wheel'
-        # else:
-        #     print 'you still suck'
+        
+    def reverse_translate_sequence(self, pseq):
+        while y < len(pseq)
+        #need to iterate through input character by character
+        
+        #pseq = str(pseq)
+        z = 0
+        revtrans = ""
+        while z < len(pseq):
+            choice = random.random()
+            print choice
+            AA = pseq(z)
+            y = len(self.amino_acid_to_all_cumulativefreq[AA])
+            print y
+            # while y < len(self.amino_acid_to_all_cumulativefreq[AA])
+            # if choice <= self.amino_acid_to_all_cumulativefreq[AA[z]]:
+            #     trp = self.amino_acid_to_all_cumulativefreq[AA[Z]]
 
-    def reverse_translate_amino_acid(self, amino_acid):
-        codon_options = self.amino_acid_to_codon_map[amino_acid]
+            z = z + 14
+
+
+
+
+
+
+        #codon_options = self.amino_acid_to_codon_map[amino_acid]
+
+            # for ID in d:
+            #     count = d[ID] #create a variable (integer) that we can call in the write function below.
+            #     output.write(ID + '\t' + str(count) + '\n') #write the ID then tab then the count converted to a string followed by a line break to output file.
 
         # Somehow make a choice.  For now, just first one.
-        codon = codon_options[0]
+        #codon = codon_options[0]
 
         # Return the one we chose.
-        return codon
+        #return codon
 
-
+#output = open()
 if __name__ == '__main__':
     my_codon_table = CodonTable('standard_usage.txt')
     #print my_codon_table.translate_codon('AAA')
     print my_codon_table.translate_sequence('ATGAAGAAATTGCTCCCCATT')
+    print my_codon_table.reverse_translate_sequence('MKKLLPILIGLSLS')
     #print len(my_codon_table.codon_to_amino_acid_map)
     #print my_codon_table.amino_acid_to_codon_map
     #print len(my_codon_table.amino_acid_to_codon_map)
