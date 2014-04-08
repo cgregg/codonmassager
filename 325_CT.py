@@ -9,58 +9,54 @@ import sys
 import optparse
 import random
 
-# parser = optparse.OptionParser() 
-# (options,args) = parser.parse_args()
+parser = optparse.OptionParser() 
+(options,args) = parser.parse_args()
 
 # #setup input/output files, hardcoded
 # #output = open('GAACCT_distro.txt','w')
 # #input = open('GAACCT_output.txt')
 
-# #setup input/output files, as args
-# #output = open(args[1],'w')
-# input = open(args[0])
-
 #create a Sequence object and assign it to TolC 
 #positive reverse translation control and input for translation
-tolC = Seq("ATGAAGAAATTGCTCCCCATTCTTATCGGCCTGAGCCTTTCTGGGTTCAGTTCGTTGAGC" + \
-        "CAGGCCGAGAACCTGATGCAAGTTTATCAGCAAGCACGCCTTAGTAACCCGGAATTGCGT" + \
-        "AAGTCTGCCGCCGATCGTGATGCTGCCTTTGAAAAAATTAATGAAGCGCGCAGTCCATTA" + \
-        "CTGCCACAGCTAGGTTTAGGTGCAGATTACACCTATAGCAACGGCTACCGCGACGCGAAC" + \
-        "GGCATCAACTCTAACGCGACCAGTGCGTCCTTGCAGTTAACTCAATCCATTTTTGATATG" + \
-        "TCGAAATGGCGTGCGTTAACGCTGCAGGAAAAAGCAGCAGGGATTCAGGACGTCACGTAT" + \
-        "CAGACCGATCAGCAAACCTTGATCCTCAACACCGCGACCGCTTATTTCAACGTGTTGAAT" + \
-        "GCTATTGACGTTCTTTCCTATACACAGGCACAAAAAGAAGCGATCTACCGTCAATTAGAT" + \
-        "CAAACCACCCAACGTTTTAACGTGGGCCTGGTAGCGATCACCGACGTGCAGAACGCCCGC" + \
-        "GCACAGTACGATACCGTGCTGGCGAACGAAGTGACCGCACGTAATAACCTTGATAACGCG" + \
-        "GTAGAGCAGCTGCGCCAGATCACCGGTAACTACTATCCGGAACTGGCTGCGCTGAATGTC" + \
-        "GAAAACTTTAAAACCGACAAACCACAGCCGGTTAACGCGCTGCTGAAAGAAGCCGAAAAA" + \
-        "CGCAACCTGTCGCTGTTACAGGCACGCTTGAGCCAGGACCTGGCGCGCGAGCAAATTCGC" + \
-        "CAGGCGCAGGATGGTCACTTACCGACTCTGGATTTAACGGCTTCTACCGGGATTTCTGAC" + \
-        "ACCTCTTATAGCGGTTCGAAAACCCGTGGTGCCGCTGGTACCCAGTATGACGATAGCAAT" + \
-        "ATGGGCCAGAACAAAGTTGGCCTGAGCTTCTCGCTGCCGATTTATCAGGGCGGAATGGTT" + \
-        "AACTCGCAGGTGAAACAGGCACAGTACAACTTTGTCGGTGCCAGCGAGCAACTGGAAAGT" + \
-        "GCCCATCGTAGCGTCGTGCAGACCGTGCGTTCCTCCTTCAACAACATTAATGCATCTATC" + \
-        "AGTAGCATTAACGCCTACAAACAAGCCGTAGTTTCCGCTCAAAGCTCATTAGACGCGATG" + \
-        "GAAGCGGGCTACTCGGTCGGTACGCGTACCATTGTTGATGTGTTGGATGCGACCACCACG" + \
-        "TTGTACAACGCCAAGCAAGAGCTGGCGAATGCGCGTTATAACTACCTGATTAATCAGCTG" + \
-        "AATATTAAGTCAGCTCTGGGTACGTTGAACGAGCAGGATCTGCTGGCACTGAACAATGCG" + \
-        "CTGAGCAAACCGGTTTCCACTAATCCGGAAAACGTTGCACCGCAAACGCCGGAACAGAAT" + \
-        "GCTATTGCTGATGGTTATGCGCCTGATAGCCCGGCACCAGTCGTTCAGCAAACATCCGCA" + \
-        "CGCACTACCACCAGTAACGGTCATAACCCTTTCCGTAACTGA", generic_dna)
+# tolC = Seq("ATGAAGAAATTGCTCCCCATTCTTATCGGCCTGAGCCTTTCTGGGTTCAGTTCGTTGAGC" + \
+#         "CAGGCCGAGAACCTGATGCAAGTTTATCAGCAAGCACGCCTTAGTAACCCGGAATTGCGT" + \
+#         "AAGTCTGCCGCCGATCGTGATGCTGCCTTTGAAAAAATTAATGAAGCGCGCAGTCCATTA" + \
+#         "CTGCCACAGCTAGGTTTAGGTGCAGATTACACCTATAGCAACGGCTACCGCGACGCGAAC" + \
+#         "GGCATCAACTCTAACGCGACCAGTGCGTCCTTGCAGTTAACTCAATCCATTTTTGATATG" + \
+#         "TCGAAATGGCGTGCGTTAACGCTGCAGGAAAAAGCAGCAGGGATTCAGGACGTCACGTAT" + \
+#         "CAGACCGATCAGCAAACCTTGATCCTCAACACCGCGACCGCTTATTTCAACGTGTTGAAT" + \
+#         "GCTATTGACGTTCTTTCCTATACACAGGCACAAAAAGAAGCGATCTACCGTCAATTAGAT" + \
+#         "CAAACCACCCAACGTTTTAACGTGGGCCTGGTAGCGATCACCGACGTGCAGAACGCCCGC" + \
+#         "GCACAGTACGATACCGTGCTGGCGAACGAAGTGACCGCACGTAATAACCTTGATAACGCG" + \
+#         "GTAGAGCAGCTGCGCCAGATCACCGGTAACTACTATCCGGAACTGGCTGCGCTGAATGTC" + \
+#         "GAAAACTTTAAAACCGACAAACCACAGCCGGTTAACGCGCTGCTGAAAGAAGCCGAAAAA" + \
+#         "CGCAACCTGTCGCTGTTACAGGCACGCTTGAGCCAGGACCTGGCGCGCGAGCAAATTCGC" + \
+#         "CAGGCGCAGGATGGTCACTTACCGACTCTGGATTTAACGGCTTCTACCGGGATTTCTGAC" + \
+#         "ACCTCTTATAGCGGTTCGAAAACCCGTGGTGCCGCTGGTACCCAGTATGACGATAGCAAT" + \
+#         "ATGGGCCAGAACAAAGTTGGCCTGAGCTTCTCGCTGCCGATTTATCAGGGCGGAATGGTT" + \
+#         "AACTCGCAGGTGAAACAGGCACAGTACAACTTTGTCGGTGCCAGCGAGCAACTGGAAAGT" + \
+#         "GCCCATCGTAGCGTCGTGCAGACCGTGCGTTCCTCCTTCAACAACATTAATGCATCTATC" + \
+#         "AGTAGCATTAACGCCTACAAACAAGCCGTAGTTTCCGCTCAAAGCTCATTAGACGCGATG" + \
+#         "GAAGCGGGCTACTCGGTCGGTACGCGTACCATTGTTGATGTGTTGGATGCGACCACCACG" + \
+#         "TTGTACAACGCCAAGCAAGAGCTGGCGAATGCGCGTTATAACTACCTGATTAATCAGCTG" + \
+#         "AATATTAAGTCAGCTCTGGGTACGTTGAACGAGCAGGATCTGCTGGCACTGAACAATGCG" + \
+#         "CTGAGCAAACCGGTTTCCACTAATCCGGAAAACGTTGCACCGCAAACGCCGGAACAGAAT" + \
+#         "GCTATTGCTGATGGTTATGCGCCTGATAGCCCGGCACCAGTCGTTCAGCAAACATCCGCA" + \
+#         "CGCACTACCACCAGTAACGGTCATAACCCTTTCCGTAACTGA", generic_dna)
 
-#transcribe tolC, remember it is necessary for proper codon mapping, but I fugred it out below...
-mRtolC = tolC.transcribe()
+# #transcribe tolC, remember it is necessary for proper codon mapping, but I fugred it out below...
+# mRtolC = tolC.transcribe()
 
-#positive control for translation and input for reverse translation
-TolC = Seq("MKKLLPILIGLSLSGFSSLSQAENLMQVYQQARLSNPELRKSAADRDAAFEKINEARSPL" + \
-        "LPQLGLGADYTYSNGYRDANGINSNATSASLQLTQSIFDMSKWRALTLQEKAAGIQDVTY" + \
-        "QTDQQTLILNTATAYFNVLNAIDVLSYTQAQKEAIYRQLDQTTQRFNVGLVAITDVQNAR" + \
-        "AQYDTVLANEVTARNNLDNAVEQLRQITGNYYPELAALNVENFKTDKPQPVNALLKEAEK" + \
-        "RNLSLLQARLSQDLAREQIRQAQDGHLPTLDLTASTGISDTSYSGSKTRGAAGTQYDDSN" + \
-        "MGQNKVGLSFSLPIYQGGMVNSQVKQAQYNFVGASEQLESAHRSVVQTVRSSFNNINASI" + \
-        "SSINAYKQAVVSAQSSLDAMEAGYSVGTRTIVDVLDATTTLYNAKQELANARYNYLINQL" + \
-        "NIKSALGTLNEQDLLALNNALSKPVSTNPENVAPQTPEQNAIADGYAPDSPAPVVQQTSA" + \
-        "RTTTSNGHNPFRN*", IUPAC.protein) 
+# #positive control for translation and input for reverse translation
+# TolC = Seq("MKKLLPILIGLSLSGFSSLSQAENLMQVYQQARLSNPELRKSAADRDAAFEKINEARSPL" + \
+#         "LPQLGLGADYTYSNGYRDANGINSNATSASLQLTQSIFDMSKWRALTLQEKAAGIQDVTY" + \
+#         "QTDQQTLILNTATAYFNVLNAIDVLSYTQAQKEAIYRQLDQTTQRFNVGLVAITDVQNAR" + \
+#         "AQYDTVLANEVTARNNLDNAVEQLRQITGNYYPELAALNVENFKTDKPQPVNALLKEAEK" + \
+#         "RNLSLLQARLSQDLAREQIRQAQDGHLPTLDLTASTGISDTSYSGSKTRGAAGTQYDDSN" + \
+#         "MGQNKVGLSFSLPIYQGGMVNSQVKQAQYNFVGASEQLESAHRSVVQTVRSSFNNINASI" + \
+#         "SSINAYKQAVVSAQSSLDAMEAGYSVGTRTIVDVLDATTTLYNAKQELANARYNYLINQL" + \
+#         "NIKSALGTLNEQDLLALNNALSKPVSTNPENVAPQTPEQNAIADGYAPDSPAPVVQQTSA" + \
+#         "RTTTSNGHNPFRN*", IUPAC.protein) 
  
 #create codon table dictionaries(3)
 class CodonTable(object):
@@ -123,6 +119,7 @@ class CodonTable(object):
                 if lineParts[z+1] not in self.amino_acid_to_all_map:
                     self.amino_acid_to_all_map[lineParts[z+1]] = {}
                 self.amino_acid_to_all_map[lineParts[z+1]][lineParts[z]] = float(lineParts[z+2])
+                #print self.amino_acid_to_all_map
                 z = z + 5   
         #print self.amino_acid_to_all_map
 
@@ -155,47 +152,51 @@ class CodonTable(object):
         return trans #returns cause to break out of function currently in, regardles of loops
         
     def reverse_translate_sequence(self, pseq):
-        while y < len(pseq)
+        #setup input/output files, as args
+        #output = open(args[1],'w')
+        #input = open(args[0])
+        #for line in input:
+        #pseq = line.split()
+        print pseq
         #need to iterate through input character by character
-        
-        #pseq = str(pseq)
         z = 0
         revtrans = ""
         while z < len(pseq):
+            AA = pseq[z]
+            trp = self.amino_acid_to_all_cumulativefreq[AA]
+            #print trp
+            trpcodons = trp.keys() #Gleb, did I need to do it this way?  Is this slow?  I couldn't figure out how to get what I wanted out of the dictionary that I got out of the dictionary...  right.
+            trpfreqs = trp.values()
+            #print trpcodons#[0]
+            #print trpfreqs
             choice = random.random()
             print choice
-            AA = pseq(z)
-            y = len(self.amino_acid_to_all_cumulativefreq[AA])
-            print y
-            # while y < len(self.amino_acid_to_all_cumulativefreq[AA])
-            # if choice <= self.amino_acid_to_all_cumulativefreq[AA[z]]:
-            #     trp = self.amino_acid_to_all_cumulativefreq[AA[Z]]
+            x = 0
+            while choice >= trpfreqs[x]:
+                x = x + 1
+            else:
+                trpchoice = trpcodons[x]
+                print trpchoice
+                revtrans = revtrans + trpchoice
+            z = z + 1
+            print z
+            print revtrans
+        revtrans = revtrans.replace('U','T')
+        print revtrans
 
-            z = z + 14
-
-
-
-
-
-
-        #codon_options = self.amino_acid_to_codon_map[amino_acid]
-
-            # for ID in d:
-            #     count = d[ID] #create a variable (integer) that we can call in the write function below.
-            #     output.write(ID + '\t' + str(count) + '\n') #write the ID then tab then the count converted to a string followed by a line break to output file.
-
-        # Somehow make a choice.  For now, just first one.
-        #codon = codon_options[0]
-
-        # Return the one we chose.
-        #return codon
+        output = open('revtransrprtr.txt','w')
+        output.write(pseq + '\t' + revtrans)
+        output.close()
+        # for ID in d:
+        #     count = d[ID] #create a variable (integer) that we can call in the write function below.
+        #     output.write(ID + '\t' + str(count) + '\n') #write the ID then tab then the count converted to a string followed by a line break to output file.
 
 #output = open()
 if __name__ == '__main__':
     my_codon_table = CodonTable('standard_usage.txt')
     #print my_codon_table.translate_codon('AAA')
-    print my_codon_table.translate_sequence('ATGAAGAAATTGCTCCCCATT')
-    print my_codon_table.reverse_translate_sequence('MKKLLPILIGLSLS')
+    print my_codon_table.translate_sequence('ATG')
+    print my_codon_table.reverse_translate_sequence('MKKLLIGILSLSTYYFFWMDIPFFFFFFFF')#args[0]')
     #print len(my_codon_table.codon_to_amino_acid_map)
     #print my_codon_table.amino_acid_to_codon_map
     #print len(my_codon_table.amino_acid_to_codon_map)

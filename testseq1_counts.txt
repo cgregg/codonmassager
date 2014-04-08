@@ -1,0 +1,7 @@
+ATG,7
+AGA,7
+TTT,7
+GGG,7
+TAG,7
+TTC,7
+CCC,21
